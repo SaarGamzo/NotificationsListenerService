@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    tools:context=".MainActivity">
+
+    <!-- Headline -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notification collector"
+        android:textSize="24sp"
+        android:id="@+id/txtHeadline"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Permissions status label -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Permissions status"
+        android:id="@+id/txtPermissionsStatus"
+        android:layout_below="@+id/txtHeadline"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Permissions screen button -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Permissions Screen"
+        android:onClick="buttonClicked"
+        android:id="@+id/btnPermissionsScreen"
+        android:layout_below="@+id/txtPermissionsStatus"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Clear All Notifications Button -->
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear All Notification"
+        android:onClick="buttonClicked"
+        android:id="@+id/btnClearNotify"
+        android:layout_below="@+id/btnPermissionsScreen"
+        android:layout_alignLeft="@+id/btnPermissionsScreen"
+        android:layout_alignRight="@+id/btnPermissionsScreen"/>
+
+    <!-- RecyclerView for notifications -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/btnClearNotify"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"/>
+</RelativeLayout>
