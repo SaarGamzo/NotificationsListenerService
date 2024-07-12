@@ -53,16 +53,8 @@ public class NLService extends NotificationListenerService {
             CharSequence csText = newNot.extras.getCharSequence(Notification.EXTRA_TEXT);
             text = csText != null ? csText.toString() : "";
         }
-
         // Extract timestamp
         long timestamp = newNot.when;
-
-        // Log the details
-        Log.i(TAG, "Package Name: " + packageName);
-        Log.i(TAG, "Title: " + title);
-        Log.i(TAG, "Text: " + text);
-        Log.i(TAG, "Timestamp: " + timestamp);
-
         // Send broadcast with the notification details
         Intent i = new Intent("com.example.mobilesecurity_finalproject.NOTIFICATION_LISTENER_EXAMPLE");
         i.putExtra("notification_event", "onNotificationPosted :\nPackage Name: " + packageName + "\nTitle: " + title + "\nText: " + text + "\nTimestamp: " + timestamp + "\n");

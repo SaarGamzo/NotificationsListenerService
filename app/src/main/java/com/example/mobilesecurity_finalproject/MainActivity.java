@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,6 +39,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         findViews();
+        setOnClickListeners();
 
         nReceiver = new NotificationReceiver();
         IntentFilter filter = new IntentFilter();
@@ -75,6 +77,28 @@ public class MainActivity extends Activity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    private void setOnClickListeners(){
+        navigateSettingsBTN.setOnClickListener(v -> navigateToSettings());
+        clearBTN.setOnClickListener(v -> clearAllNotifications());
+    }
+
+    private void clearAllNotifications() {
+        // Remove all notifications from Firebase
+        databaseReference.removeValue().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                // Notify the user that notifications have been cleared
+                Toast.makeText(MainActivity.this, "All notifications cleared", Toast.LENGTH_SHORT).show();
+            } else {
+                // Handle any errors
+                Toast.makeText(MainActivity.this, "Failed to clear notifications", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void navigateToSettings() {
+        startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+    }
+
     private void checkNotificationPermission() {
         if (isNotificationServiceEnabled(this)) {
             txtPermissionsStatus.setText("Permissions granted");
@@ -101,16 +125,29 @@ public class MainActivity extends Activity {
         return false;
     }
 
-    public void buttonClicked(View v) {
-        if (v.getId() == R.id.btnClearNotify) {
-            Intent i = new Intent("com.example.mobilesecurity_finalproject.NOTIFICATION_LISTENER_SERVICE_EXAMPLE");
-            i.putExtra("command", "clearall");
-            sendBroadcast(i);
-        } else if (v.getId() == R.id.btnPermissionsScreen) {
-            startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
-        }
-        checkNotificationPermission();
+//    public void buttonClicked(View v) {
+//        if (v.getId() == R.id.btnClearNotify) {
+//            Intent i = new Intent("com.example.mobilesecurity_finalproject.NOTIFICATION_LISTENER_SERVICE_EXAMPLE");
+//            i.putExtra("command", "clearall");
+//            sendBroadcast(i);
+//        } else if (v.getId() == R.id.btnPermissionsScreen) {
+//            startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+//        }
+//        checkNotificationPermission();
+//    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening(); // Start listening to Firebase updates
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkNotificationPermission(); // Check and update permissions status when the activity resumes
+    }
+
 
     @Override
     protected void onDestroy() {
