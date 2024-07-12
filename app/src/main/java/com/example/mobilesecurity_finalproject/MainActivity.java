@@ -24,20 +24,22 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * MainActivity displays and manages notifications and permissions for the application.
+ * It interacts with Firebase to store and display notifications.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private TextView txtPermissionsCreate;
     private TextView txtPermissionsRead;
-    private TextView txtPermissionsStatus;
-    private NotificationReceiver nReceiver;
     private RecyclerView recyclerView;
     private NotificationsAdapter adapter;
     private DatabaseReference databaseReference;
     private NotificationManager notificationManager;
 
-    private Button clearBTN;
     private Button navigateCreatePermissionsBTN;
     private Button navigateReadPermissionsBTN;
+    private Button clearBTN;
 
     private static final int NOTIFICATION_ID = 1;
     private boolean isNotificationVisible = false;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Initialize UI components
         findViews();
         setOnClickListeners();
 
@@ -54,13 +57,10 @@ public class MainActivity extends AppCompatActivity {
         notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         NotificationUtils.createNotificationChannel(this);
 
-        nReceiver = new NotificationReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.example.mobilesecurity_finalproject.NOTIFICATION_LISTENER_EXAMPLE");
-        registerReceiver(nReceiver, filter);
-
+        // Check and request notification permissions
         checkNotificationPermissions();
 
+        // Initialize Firebase
         firebaseInitialize();
 
         // Configure FirebaseRecyclerOptions
@@ -69,103 +69,133 @@ public class MainActivity extends AppCompatActivity {
                         .setQuery(databaseReference, NotificationData.class)
                         .build();
 
-        // Initialize your adapter with the options
+        // Initialize RecyclerView and adapter
         adapter = new NotificationsAdapter(options);
-
-        // Set up your RecyclerView with the adapter
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }
 
+    /**
+     * Initializes Firebase Database reference.
+     */
     private void firebaseInitialize() {
-        // Firebase initialization
         databaseReference = FirebaseDatabase.getInstance().getReference("notifications");
     }
 
+    /**
+     * Finds and initializes views from XML layout.
+     */
     private void findViews() {
-        clearBTN = findViewById(R.id.btnClearNotify);
         navigateCreatePermissionsBTN = findViewById(R.id.btnNotificationAccess);
         navigateReadPermissionsBTN = findViewById(R.id.btnPermissionsScreen);
+        clearBTN = findViewById(R.id.btnClearNotify);
         txtPermissionsCreate = findViewById(R.id.txtPermissionsCreate);
         txtPermissionsRead = findViewById(R.id.txtPermissionsRead);
-//        txtPermissionsStatus = findViewById(R.id.txtPermissionsCreate);
         recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    /**
+     * Sets click listeners for navigation and clear buttons.
+     */
     private void setOnClickListeners() {
         navigateCreatePermissionsBTN.setOnClickListener(v -> navigateToCreatePermissions());
         navigateReadPermissionsBTN.setOnClickListener(v -> navigateToReadPermissions());
         clearBTN.setOnClickListener(v -> clearAllNotifications());
     }
 
+    /**
+     * Clears all notifications stored in Firebase.
+     */
     private void clearAllNotifications() {
-        // Remove all notifications from Firebase
         databaseReference.removeValue().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                // Notify the user that notifications have been cleared
                 Toast.makeText(MainActivity.this, "All notifications cleared", Toast.LENGTH_SHORT).show();
             } else {
-                // Handle any errors
                 Toast.makeText(MainActivity.this, "Failed to clear notifications", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
+    /**
+     * Navigates to system settings for app notification access.
+     */
     private void navigateToCreatePermissions() {
         startActivity(new Intent(Settings.ACTION_ALL_APPS_NOTIFICATION_SETTINGS)
                 .putExtra(Settings.EXTRA_APP_PACKAGE, getPackageName()));
     }
 
+    /**
+     * Navigates to system settings for notification listener access.
+     */
     private void navigateToReadPermissions() {
         startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
     }
 
+    /**
+     * Checks and updates UI based on notification permissions granted.
+     */
     private void checkNotificationPermissions() {
         boolean createPermissionGranted = isNotificationCreatePermissionGranted(this);
         boolean readPermissionGranted = isNotificationReadPermissionGranted(this);
 
+        // Update UI based on create notification permission
         if (createPermissionGranted) {
             txtPermissionsCreate.setText("Permissions granted");
-            navigateReadPermissionsBTN.setEnabled(true);
         } else {
             txtPermissionsCreate.setText("Permissions not granted");
-            navigateReadPermissionsBTN.setEnabled(false);
         }
 
+        // Update UI based on read notification permission
         if (readPermissionGranted) {
             txtPermissionsRead.setText("Permissions granted");
-            // Check if the notification is already visible
+            NLService.setRunning(true);
             if (!isNotificationVisible) {
                 showNotification();
             }
         } else {
             txtPermissionsRead.setText("Permissions not granted");
-            // Remove the notification if it's currently visible
+            NLService.setRunning(false);
             if (isNotificationVisible) {
                 removeNotification();
             }
         }
     }
 
+    /**
+     * Shows a persistent notification indicating background notification collection.
+     */
     private void showNotification() {
         Notification notification = NotificationUtils.buildNotification(this, "Collecting notifications in background...");
         notificationManager.notify(NOTIFICATION_ID, notification);
         isNotificationVisible = true;
     }
 
+    /**
+     * Removes the persistent notification.
+     */
     private void removeNotification() {
         notificationManager.cancel(NOTIFICATION_ID);
         isNotificationVisible = false;
     }
 
+    /**
+     * Checks if the app has permission to create notifications.
+     *
+     * @param context The context of the calling component.
+     * @return True if the app has notification creation permission, false otherwise.
+     */
     private boolean isNotificationCreatePermissionGranted(Context context) {
-        // Use NotificationManagerCompat to check if the app has permission to create notifications
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(context);
         boolean areNotificationsEnabled = notificationManager.areNotificationsEnabled();
         return areNotificationsEnabled;
     }
 
+    /**
+     * Checks if the app has permission to read notifications.
+     *
+     * @param context The context of the calling component.
+     * @return True if the app has notification listener permission, false otherwise.
+     */
     private boolean isNotificationReadPermissionGranted(Context context) {
         String pkgName = context.getPackageName();
         final String flat = Settings.Secure.getString(context.getContentResolver(),
@@ -199,13 +229,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(nReceiver);
-    }
-
-    class NotificationReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            // Handle broadcast if needed
-        }
     }
 }
