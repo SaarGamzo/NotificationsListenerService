@@ -44,11 +44,12 @@ To run this application on your local machine:
 1. Clone this repository.
 2. Open the project in Android Studio.
 3. Connect an Android device or use an emulator.
-4. Build and run the application.
-5. Grant the permissions to create notifications.
-6. Grant the permissions to listen notifications.
-7. Close the application and notice the notifications is still there until you stop the permissions.
-8. View all incoming notifications in the applications screen.
+4. **Don't forget to add your google-service.json to /app/ directory, (mine is not here because private key is there of course)**.
+5. Build and run the application.
+6. Grant the permissions to create notifications.
+7. Grant the permissions to listen notifications.
+8. Close the application and notice the notifications is still there until you stop the permissions.
+9. View all incoming notifications in the applications screen.
 
 ## Dependencies
 
