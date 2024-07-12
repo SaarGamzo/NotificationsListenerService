@@ -11,54 +11,78 @@
 
     <!-- Headline -->
     <TextView
+        android:id="@+id/txtHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Notification collector"
         android:textSize="24sp"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:id="@+id/txtHeadline"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"/>
 
-    <!-- Permissions status label -->
+    <!-- Permissions to Create Notifications -->
     <TextView
+        android:id="@+id/txtPermissionsCreate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Permissions status"
+        android:text="Permissions to create notifications:\nPermissions not granted"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:id="@+id/txtPermissionsStatus"
         android:layout_below="@+id/txtHeadline"
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"/>
 
-    <!-- Permissions screen button -->
-    <com.google.android.material.button.MaterialButton
+    <!-- Permissions screen button for Create Permissions -->
+    <Button
+        android:id="@+id/btnNotificationAccess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to Permissions Screen"
-        android:id="@+id/btnPermissionsScreen"
-        android:layout_below="@+id/txtPermissionsStatus"
+        android:text="Go to Notification Settings"
+        android:layout_below="@+id/txtPermissionsCreate"
         android:layout_marginTop="16dp"
         android:layout_centerHorizontal="true"/>
 
+    <!-- Permissions to Read Notifications -->
+    <TextView
+        android:id="@+id/txtPermissionsRead"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Permissions to read notifications:\n Permissions not granted"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_below="@+id/btnNotificationAccess"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
+
+    <!-- Permissions screen button for Read Permissions -->
+    <Button
+        android:id="@+id/btnPermissionsScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to Permissions Screen"
+        android:layout_below="@+id/txtPermissionsRead"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"
+        android:enabled="false"/> <!-- Initially disabled -->
+
     <!-- RecyclerView for notifications -->
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:id="@+id/recyclerView"
         android:layout_below="@+id/btnPermissionsScreen"
         android:layout_above="@+id/btnClearNotify"
         android:layout_marginTop="16dp"/>
 
     <!-- Clear All Notifications Button -->
-    <com.google.android.material.button.MaterialButton
+    <Button
+        android:id="@+id/btnClearNotify"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Clear All Notification"
-        android:id="@+id/btnClearNotify"
+        android:text="Clear All Notifications"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"/>
