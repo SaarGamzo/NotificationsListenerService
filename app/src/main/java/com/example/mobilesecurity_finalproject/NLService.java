@@ -38,6 +38,7 @@ public class NLService extends NotificationListenerService {
         isRunning = false;
     }
 
+    //set status of isRunning
     public static void setRunning(boolean value){
         isRunning = value;
     }
