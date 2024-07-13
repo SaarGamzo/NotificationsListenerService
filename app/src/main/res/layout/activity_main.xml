@@ -86,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@+id/txtCouningFrom"
-        android:layout_above="@+id/btnClearNotify"
+        android:layout_above="@+id/btnStatistics"
         android:layout_marginTop="16dp"/>
 
     <!-- Clear All Notifications Button -->
@@ -98,5 +98,15 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"/>
+
+    <!-- Statistics Button -->
+    <Button
+        android:id="@+id/btnStatistics"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Statistics"
+        android:layout_above="@id/btnClearNotify"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
 
 </RelativeLayout>

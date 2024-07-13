@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     private Button navigateReadPermissionsBTN;
     private Button clearBTN;
 
+    private Button btnStatistics;
+
     private static final int NOTIFICATION_ID = 1;
     private boolean isNotificationVisible = false;
 
@@ -135,6 +137,7 @@ public class MainActivity extends AppCompatActivity {
         txtPermissionsRead = findViewById(R.id.txtPermissionsRead);
         recyclerView = findViewById(R.id.recyclerView);
         txtCouningFrom = findViewById(R.id.txtCouningFrom);
+        btnStatistics = findViewById(R.id.btnStatistics);
     }
 
     /**
@@ -144,6 +147,12 @@ public class MainActivity extends AppCompatActivity {
         navigateCreatePermissionsBTN.setOnClickListener(v -> navigateToCreatePermissions());
         navigateReadPermissionsBTN.setOnClickListener(v -> navigateToReadPermissions());
         clearBTN.setOnClickListener(v -> clearAllNotifications());
+        btnStatistics.setOnClickListener(v -> navigateToStatistics());
+    }
+
+    private void navigateToStatistics() {
+        Intent intent = new Intent(MainActivity.this, Statistics.class);
+        startActivity(intent);
     }
 
     /**
