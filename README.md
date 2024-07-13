@@ -22,6 +22,7 @@ To function properly, the application requires the following permissions:
 - **Firebase Integration**: Notifications are uploaded to Firebase Realtime Database for storage and retrieval.
 - **Permissions Management**: Provides buttons to navigate users to system settings for granting necessary permissions.
 - **Notification Display**: Displays collected notifications in a RecyclerView within the app.
+- **Statistics View**: See groups in a bar chart, on Statistics activity.
 - **Clear Notifications**: Allows users to clear all stored notifications from Firebase.
 
 ## Screenshots & Video example
