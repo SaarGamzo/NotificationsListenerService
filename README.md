@@ -26,17 +26,13 @@ To function properly, the application requires the following permissions:
 
 ## Screenshots & Video example
 
-### Firebase realtime database:
-<img src="https://github.com/user-attachments/assets/b396dd9b-be6b-47e1-bde0-3180596e2070" alt="Image 1" width="400" height="800">
+| Firebase Realtime Database             | Main Application Screen                | Statistics Screen                     | Application Notification              |
+|----------------------------------------|----------------------------------------|----------------------------------------|----------------------------------------|
+| ![Firebase Realtime Database](https://github.com/user-attachments/assets/b396dd9b-be6b-47e1-bde0-3180596e2070) | ![Main Application Screen](https://github.com/user-attachments/assets/94b1d64d-611c-47b9-af1a-4aca28dd1896) | ![Statistics Screen](https://github.com/user-attachments/assets/258673ee-bd7e-41a0-9d4a-1a8d998fd847) | ![Application Notification](https://github.com/user-attachments/assets/493721e8-a29a-4a0e-a2a1-3b32de82534a) |
 
-### Application screen:
-<img src="https://github.com/user-attachments/assets/4e41600c-81cd-4d86-80ea-29a7382d80d2" alt="Image 2" width="400" height="800">
-
-### Application notification
-<img src="https://github.com/user-attachments/assets/493721e8-a29a-4a0e-a2a1-3b32de82534a" alt="Image 3" width="400" height="800">
 
 ### Application example:
-https://github.com/user-attachments/assets/68693245-3ccb-4e33-8916-133e1d6628f2
+https://github.com/user-attachments/assets/75622b58-7514-4541-bb02-e2e7d92e9f07
 
 ## Getting Started
 
