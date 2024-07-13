@@ -1,0 +1,9 @@
+<!-- recycler_border.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/transparent" />
+    <stroke
+        android:width="2dp"
+        android:color="@color/black" /> <!-- Adjust width and color as needed -->
+    <padding android:bottom="1dp" android:left="1dp" android:right="1dp" android:top="1dp" />
+</shape>
