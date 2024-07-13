@@ -208,20 +208,20 @@ public class MainActivity extends AppCompatActivity {
 
         // Update UI based on create notification permission
         if (createPermissionGranted) {
-            txtPermissionsCreate.setText("Permissions granted");
+            txtPermissionsCreate.setText("Permissions to create notifications:\nGranted");
         } else {
-            txtPermissionsCreate.setText("Permissions not granted");
+            txtPermissionsCreate.setText("Permissions to create notifications:\nNot granted");
         }
 
         // Update UI based on read notification permission
         if (readPermissionGranted) {
-            txtPermissionsRead.setText("Permissions granted");
+            txtPermissionsRead.setText("Permissions to read notifications:\nGranted");
             NLService.setRunning(true);
             if (!isNotificationVisible) {
                 showNotification();
             }
         } else {
-            txtPermissionsRead.setText("Permissions not granted");
+            txtPermissionsRead.setText("Permissions to read notifications:\nNot granted");
             NLService.setRunning(false);
             if (isNotificationVisible) {
                 removeNotification();
