@@ -28,10 +28,10 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<NotificationDa
 
     @Override
     protected void onBindViewHolder(@NonNull NotificationViewHolder holder, int position, @NonNull NotificationData model) {
-        holder.packageName.setText(model.getPackageName());
-        holder.title.setText(model.getTitle());
-        holder.text.setText(model.getText());
-        holder.timestamp.setText(String.valueOf(model.getTimestamp()));
+        holder.packageName.setText("*Package*: " +model.getPackageName() + "\n");
+        holder.title.setText("*Title*: " + model.getTitle() + "\n");
+        holder.text.setText("*Text*: " +model.getText() + "\n");
+        holder.timestamp.setText("*Posted*: " + String.valueOf(model.getTimestamp()) + "\n");
     }
 
     static class NotificationViewHolder extends RecyclerView.ViewHolder {

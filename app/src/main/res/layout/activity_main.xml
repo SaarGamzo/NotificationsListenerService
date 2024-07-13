@@ -49,7 +49,7 @@
         android:id="@+id/txtPermissionsRead"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Permissions to read notifications:\n Permissions not granted"
+        android:text="Permissions to read notifications:\nPermissions not granted"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -65,15 +65,27 @@
         android:text="Go to Permissions Screen"
         android:layout_below="@+id/txtPermissionsRead"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerHorizontal="true"/>
+
+    <!-- First additional TextView -->
+    <TextView
+        android:id="@+id/txtCouningFrom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Counting from:"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:layout_below="@+id/btnPermissionsScreen"
+        android:layout_marginTop="16dp"
+        android:layout_centerHorizontal="true"/>
 
     <!-- RecyclerView for notifications -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_below="@+id/btnPermissionsScreen"
+        android:layout_below="@+id/txtCouningFrom"
         android:layout_above="@+id/btnClearNotify"
         android:layout_marginTop="16dp"/>
 

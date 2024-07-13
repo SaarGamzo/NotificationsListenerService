@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -21,8 +22,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.util.Date;
 
 /**
  * MainActivity displays and manages notifications and permissions for the application.
@@ -31,10 +39,14 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
 
     private TextView txtPermissionsCreate;
+
+    private TextView txtCouningFrom;
     private TextView txtPermissionsRead;
     private RecyclerView recyclerView;
     private NotificationsAdapter adapter;
     private DatabaseReference databaseReference;
+
+    private DatabaseReference runningTimeDataReference;
     private NotificationManager notificationManager;
 
     private Button navigateCreatePermissionsBTN;
@@ -43,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int NOTIFICATION_ID = 1;
     private boolean isNotificationVisible = false;
+
+    private String RUNNINFROM = "RUNNING_FROM";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +94,35 @@ public class MainActivity extends AppCompatActivity {
      */
     private void firebaseInitialize() {
         databaseReference = FirebaseDatabase.getInstance().getReference("notifications");
+        runningTimeDataReference = FirebaseDatabase.getInstance().getReference(RUNNINFROM);
+
+        // Check if 'RUNNINGFROM' exists in Firebase
+        runningTimeDataReference.child(RUNNINFROM).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    // 'RUNNINGFROM' does not exist, upload current time
+                    long currentTimestamp = System.currentTimeMillis();
+                    runningTimeDataReference.child(RUNNINFROM).setValue(currentTimestamp).addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            updateRunningSinceUI(currentTimestamp);
+                        } else {
+                            Toast.makeText(MainActivity.this, "Failed to set initial running time", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    // 'RUNNINGFROM' exists, update UI with existing timestamp
+                    long runningSince = dataSnapshot.getValue(Long.class);
+                    updateRunningSinceUI(runningSince);
+                }
+            }
+                        @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(MainActivity.this, "Database error: " + databaseError.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
+
 
     /**
      * Finds and initializes views from XML layout.
@@ -92,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
         txtPermissionsCreate = findViewById(R.id.txtPermissionsCreate);
         txtPermissionsRead = findViewById(R.id.txtPermissionsRead);
         recyclerView = findViewById(R.id.recyclerView);
+        txtCouningFrom = findViewById(R.id.txtCouningFrom);
     }
 
     /**
@@ -101,6 +144,14 @@ public class MainActivity extends AppCompatActivity {
         navigateCreatePermissionsBTN.setOnClickListener(v -> navigateToCreatePermissions());
         navigateReadPermissionsBTN.setOnClickListener(v -> navigateToReadPermissions());
         clearBTN.setOnClickListener(v -> clearAllNotifications());
+    }
+
+    /**
+     * Sets the 'Running since' timestamp in the UI.
+     */
+    private void updateRunningSinceUI(long timestamp) {
+        String formattedDate = SimpleDateFormat.getDateTimeInstance().format(new Date(timestamp));
+        txtCouningFrom.setText("Counting from: " + formattedDate);
     }
 
     /**
@@ -114,6 +165,14 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Failed to clear notifications", Toast.LENGTH_SHORT).show();
             }
         });
+        long currentTimestamp = System.currentTimeMillis();
+        runningTimeDataReference.child(RUNNINFROM).setValue(currentTimestamp).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                updateRunningSinceUI(currentTimestamp);
+            } else {
+            }
+        });
+
     }
 
     /**
