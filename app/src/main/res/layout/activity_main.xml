@@ -86,29 +86,38 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@+id/txtCouningFrom"
-        android:layout_above="@+id/btnStatistics"
+        android:layout_above="@+id/linderBottonButtons"
         android:layout_marginTop="8dp"
         android:background="@drawable/recycler_border" />
 
 
-    <!-- Clear All Notifications Button -->
-    <Button
-        android:id="@+id/btnClearNotify"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linderBottonButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Clear All Notifications"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="1dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginEnd="8dp"
+        android:gravity="center"
+        android:orientation="horizontal">
 
-    <!-- Statistics Button -->
-    <Button
-        android:id="@+id/btnStatistics"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Statistics"
-        android:layout_above="@id/btnClearNotify"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"/>
+        <!-- Clear All Notifications Button -->
+        <Button
+            android:id="@+id/btnClearNotify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Clear All Notifications"
+            android:layout_marginEnd="8dp" />
+
+        <!-- Statistics Button -->
+        <Button
+            android:id="@+id/btnStatistics"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Statistics" />
+
+    </LinearLayout>
+
 
 </RelativeLayout>
