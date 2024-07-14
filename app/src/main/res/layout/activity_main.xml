@@ -88,6 +88,7 @@
         android:layout_below="@+id/txtCouningFrom"
         android:layout_above="@+id/linderBottonButtons"
         android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/recycler_border" />
 
 
