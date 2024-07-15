@@ -36,7 +36,7 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<NotificationDa
         holder.title.setText("*Title*: " + model.getTitle() + "\n");
         holder.text.setText("*Text*: " +model.getText() + "\n");
         String formattedDate = SimpleDateFormat.getDateTimeInstance().format(new Date(model.getTimestamp()));
-        holder.timestamp.setText("*Posted*: " + formattedDate + "\n");
+        holder.timestamp.setText("*Posted*: " + formattedDate);
 
         if(model.getPackageName().contains("whatsapp")){
             holder.packageIcon.setImageResource(R.drawable.whatsapp);
