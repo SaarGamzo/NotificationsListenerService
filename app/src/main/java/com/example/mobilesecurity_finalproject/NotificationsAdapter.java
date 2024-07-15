@@ -12,6 +12,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NotificationsAdapter extends FirebaseRecyclerAdapter<NotificationData, NotificationsAdapter.NotificationViewHolder> {
 
     public NotificationsAdapter(@NonNull FirebaseRecyclerOptions<NotificationData> options) {
@@ -32,7 +35,8 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<NotificationDa
         holder.packageName.setText("*Package*: " + model.getPackageName() + "\n");
         holder.title.setText("*Title*: " + model.getTitle() + "\n");
         holder.text.setText("*Text*: " +model.getText() + "\n");
-        holder.timestamp.setText("*Posted*: " + String.valueOf(model.getTimestamp()) + "\n");
+        String formattedDate = SimpleDateFormat.getDateTimeInstance().format(new Date(model.getTimestamp()));
+        holder.timestamp.setText("*Posted*: " + formattedDate + "\n");
 
         if(model.getPackageName().contains("whatsapp")){
             holder.packageIcon.setImageResource(R.drawable.whatsapp);
