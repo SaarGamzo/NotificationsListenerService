@@ -59,6 +59,9 @@ public class NotificationsAdapter extends FirebaseRecyclerAdapter<NotificationDa
         else if(model.getPackageName().contains("outlook")){
             holder.packageIcon.setImageResource(R.drawable.outlook);
         }
+        else if(model.getPackageName().contains("telegram")){
+            holder.packageIcon.setImageResource(R.drawable.telegram);
+        }
         else {
             holder.packageIcon.setImageResource(R.drawable.android);
         }
