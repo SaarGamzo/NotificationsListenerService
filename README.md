@@ -35,6 +35,8 @@ To function properly, the application requires the following permissions:
 ### Application example:
 https://github.com/user-attachments/assets/75622b58-7514-4541-bb02-e2e7d92e9f07
 
+https://github.com/user-attachments/assets/61c4fee7-d519-4b91-bd17-ccf1565ba7b0
+
 ## Getting Started
 
 To run this application on your local machine:
